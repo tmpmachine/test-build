@@ -1,0 +1,24 @@
+name: Add Submodule
+
+on:
+  workflow_dispatch:
+
+jobs:
+  add-submodule:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # needed for full git history
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Add submodule
+        run: |
+          git submodule add https://github.com/tmpmachine/test-project.git submodule/src
+          git commit -am "Add submodule"
+          git push
