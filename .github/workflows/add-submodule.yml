@@ -23,4 +23,4 @@ jobs:
         run: |
           git submodule add https://$REPO_ACCESS_TOKEN@github.com/tmpmachine/test-project.git submodule/src
           git commit -am "Add submodule"
-          git push
+          git push https://$REPO_ACCESS_TOKEN@github.com/tmpmachine/test-build.git HEAD:main
