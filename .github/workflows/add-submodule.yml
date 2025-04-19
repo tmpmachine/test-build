@@ -10,6 +10,7 @@ jobs:
       - name: Checkout main repo
         uses: actions/checkout@v4
         with:
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
           fetch-depth: 0  # needed for full git history
 
       - name: Configure Git
@@ -23,4 +24,4 @@ jobs:
         run: |
           git submodule add https://$REPO_ACCESS_TOKEN@github.com/tmpmachine/test-project.git submodule/src
           git commit -am "Add submodule"
-          git push https://$REPO_ACCESS_TOKEN@github.com/tmpmachine/test-build.git HEAD:main
+          git push
