@@ -1,6 +1,8 @@
 name: Add Submodule
 
 on:
+  repository_dispatch:
+    types: [deploy-from-submodule]
   workflow_dispatch:
 
 jobs:
