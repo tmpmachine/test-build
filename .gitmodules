@@ -1,0 +1,3 @@
+[submodule "submodule/src"]
+	path = submodule/src
+	url = https://github.com/tmpmachine/test-project.git
