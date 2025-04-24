@@ -3,6 +3,7 @@ name: Add and Pull Submodule
 on:
   repository_dispatch:
     types: [remote-deploy]
+  workflow_dispatch:
 
 jobs:
   pull-submodule:
