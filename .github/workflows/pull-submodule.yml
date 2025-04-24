@@ -1,0 +1,26 @@
+name: Add and Pull Submodule
+
+on:
+  repository_dispatch:
+    types: [remote-deploy]
+
+jobs:
+  pull-submodule:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          submodules: false  # Disable automatic submodule checkout
+
+      - name: Pull Submodule if Not Exists
+        run: |
+          if [ ! -d "./submodule/src" ]; then
+            echo "Submodule does not exist. Adding the submodule..."
+            git submodule add <repository-url> ./path-to-submodule
+          else
+            echo "Submodule already exists. Skipping add."
+          fi
+          echo "Initializing and updating submodules..."
+          git submodule update --init --recursive
