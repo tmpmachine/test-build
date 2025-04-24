@@ -1,4 +1,4 @@
-name: Add and Pull Submodule
+name: Update Submodule
 
 on:
   repository_dispatch:
@@ -6,34 +6,28 @@ on:
   workflow_dispatch:
 
 jobs:
-  pull-submodule:
+  update-submodule:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
         with:
-          submodules: false  # Disable automatic submodule checkout
+          submodules: true  # Ensure we initialize submodules
 
-      - name: Pull Submodule if Not Exists
+      - name: Update Submodule to Latest Commit
         run: |
-          if [ ! -d "./submodule/src" ]; then
-            echo "Submodule does not exist. Adding the submodule..."
-            git submodule add <repository-url> ./path-to-submodule
-          else
-            echo "Submodule already exists. Skipping add."
-          fi
-          echo "Initializing and updating submodules..."
-          git submodule update --init --recursive
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Commit and Push Changes
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          cd submodule/src
+          git checkout main  # or your submodule's default branch
+          git pull origin main
+          cd ../../
 
+          git add submodule/src
           if [ -n "$(git status --porcelain)" ]; then
-            git add .
-            git commit -m "changes"
+            git commit -m "Update submodule to latest commit"
             git push
           else
             echo "No changes to commit."
