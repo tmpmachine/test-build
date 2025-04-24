@@ -13,9 +13,12 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
         with:
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
           submodules: true  # Ensure we initialize submodules
 
       - name: Update Submodule to Latest Commit
+        env:
+          REPO_ACCESS_TOKEN: ${{ secrets.REPO_ACCESS_TOKEN }}
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
